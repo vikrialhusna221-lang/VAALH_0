@@ -1,44 +1,61 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vikri Al Husna</title>
+    <title>Vikri Al Husna | Portfolio</title>
+    <meta name="description" content="Portofolio pribadi Vikri Al Husna - Student & Junior Web Developer">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://raw.githubusercontent.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <header>
-        <h1>Vikri Al Husna</h1>
-        <p>Noh liat</p>
-        <button id="navToggleBtn" onclick="toggleNavMenu()">Menu Utama</button>
-        
+    <!-- Animated Moving Gradient Lines Background -->
+    <div class="bg-lines-container">
+        <div class="bg-grid"></div>
+        <div class="bg-line bg-line-1"></div>
+        <div class="bg-line bg-line-2"></div>
+        <div class="bg-line bg-line-3"></div>
+        <div class="bg-line bg-line-4"></div>
+    </div>
+
+    <header class="navbar">
+        <div class="nav-logo" onclick="navigateToSection('home')">
+            <span>Vikri Al Husna</span>
+        </div>
+
         <div class="nav-menu" id="navMenu">
-            <button class="nav-btn" onclick="navigateToSection('home')">
-                <i class="fas fa-home"></i> Home
-            </button>
-            <button class="nav-btn" onclick="navigateToSection('achievement')">
-                <i class="fas fa-trophy"></i> Achievement
-            </button>
-            <button class="nav-btn" onclick="navigateToSection('biography')">
-                <i class="fas fa-user-circle"></i> Biography
-            </button>
-            <button class="nav-btn" onclick="navigateToSection('contact')">
-                <i class="fas fa-phone"></i> Contact Person
+            <button class="nav-btn" onclick="navigateToSection('home')">Home</button>
+            <button class="nav-btn" onclick="navigateToSection('biography')">Biography</button>
+            <button class="nav-btn" onclick="navigateToSection('achievement')">Achievement</button>
+            <button class="nav-btn" onclick="navigateToSection('documentation')">Documentation</button>
+            <button class="nav-btn" onclick="navigateToSection('contact')">Contact</button>
+        </div>
+
+        <div class="nav-right">
+            <div class="user-icon" onclick="toggleDropdown()">
+                <img src="https://raw.githubusercontent.com/vikrialhusna221-lang/STORAGE/main/1000035697.jpg"
+                    alt="Profile" width="40" height="40" decoding="async">
+            </div>
+            <button id="navToggleBtn" onclick="toggleNavMenu()">
+                <i class="fas fa-bars"></i>
             </button>
         </div>
-        
-        <div class="user-icon" onclick="toggleDropdown()">
-            <img src="https://github.com/vikrialhusna221-lang/STORAGE/blob/main/profile.jpg" alt="Profile">
-        </div>
-        
+
         <div class="dropdown-menu" id="dropdownMenu">
             <h3>My Info</h3>
             <div class="contact-item">
-                <a href="/cdn-cgi/l/email-protection#baccd3d1c8d3dbd6d2cfd4c9db88888bfaddd7dbd3d694d9d5d7" target="_blank">
+                <a href="mailto:vikrialhusna221@gmail.com" target="_blank">
                     <i class="fas fa-envelope"></i>
-                    <span><span class="__cf_email__" data-cfemail="0a7c636178636b66627f64796b38383b4a6d676b636624696567">[email&#160;protected]</span></span>
+                    <span>vikrialhusna221@gmail.com</span>
                 </a>
             </div>
             <div class="contact-item">
@@ -48,9 +65,16 @@
                 </a>
             </div>
             <div class="contact-item">
-                <a href="https://www.instagram.com/vaalh_0?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                <a href="https://www.instagram.com/vaalh_0?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                    target="_blank">
                     <i class="fab fa-instagram"></i>
                     <span>vaalh_0</span>
+                </a>
+            </div>
+            <div class="contact-item">
+                <a href="https://github.com/vikrialhusna221-lang" target="_blank">
+                    <i class="fab fa-github"></i>
+                    <span>vikrialhusna221-lang</span>
                 </a>
             </div>
 
@@ -59,7 +83,7 @@
                 <div class="theme-options">
                     <span class="theme-label">Merah</span>
                     <label class="toggle-switch">
-                        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                        <input type="checkbox" id="darkModeToggle" checked onchange="toggleDarkMode()">
                         <span class="slider"></span>
                     </label>
                     <span class="theme-label">Gelap</span>
@@ -67,32 +91,52 @@
             </div>
         </div>
     </header>
-    
+
     <div class="container">
         <section id="home">
-            <div class="home-content">
-                <h2 class="home-title">
-                    <span class="title-char">H</span>
-                    <span class="title-char">O</span>
-                    <span class="title-char">M</span>
-                    <span class="title-char">E</span>
-                </h2>
-                <p class="home-subtitle">gitu lah,ada-lah pokoknya</p>
-                <div class="home-cards">
-                    <div class="home-card">
-                        <i class="fas fa-user"></i>
-                        <h3>About Me</h3>
-                        <p>yang udah tau tau aja</p>
+            <div class="home-hero-container">
+                <div class="home-hero-left">
+                    <span class="hero-tag">Portofolio</span>
+                    <h2 class="hero-role">Web Developer</h2>
+                    <h1 class="hero-name">Vikri Al Husna</h1>
+                    <p class="hero-desc">yaaa,ini portofolio sya, msih b aja, sambil belajar soalnya.</p>
+                    <div class="hero-actions">
+                        <button class="action-btn primary" onclick="navigateToSection('contact')">Contact</button>
+                        <button class="action-btn secondary"
+                            onclick="navigateToSection('documentation')">Project</button>
                     </div>
-                    <div class="home-card">
-                        <i class="fas fa-code"></i>
-                        <h3>Developer</h3>
-                        <p>yaaa bisa -lah dikit"</p>
-                    </div>
-                    <div class="home-card">
-                        <i class="fas fa-star"></i>
-                        <h3>Creative</h3>
-                        <p>sebenarnya gk juga sih</p>
+                </div>
+                <div class="home-hero-right">
+                    <div class="id-card-wrapper">
+                        <div class="id-card-strap"></div>
+                        <div class="id-card-clip"></div>
+                        <div class="id-card">
+                            <div class="id-card-header">
+                                <span class="card-logo">DEV CARD</span>
+                                <div class="card-chip"></div>
+                            </div>
+                            <div class="id-card-photo">
+                                <img src="https://raw.githubusercontent.com/vikrialhusna221-lang/STORAGE/main/1000035697.jpg"
+                                    alt="Vikri Al Husna" width="130" height="130" loading="eager">
+                            </div>
+                            <div class="id-card-info">
+                                <h3>Vikri Al Husna</h3>
+                                <p class="card-role">Student & Junior Developer</p>
+                                <p class="card-dept">XI P1</p>
+                                <div class="id-card-barcode">
+                                    <div class="barcode-line"></div>
+                                    <div class="barcode-line"></div>
+                                    <div class="barcode-line"></div>
+                                    <div class="barcode-line"></div>
+                                    <div class="barcode-line"></div>
+                                    <div class="barcode-line"></div>
+                                    <div class="barcode-line"></div>
+                                    <div class="barcode-line"></div>
+                                    <div class="barcode-line"></div>
+                                    <div class="barcode-line"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -101,27 +145,27 @@
         <section id="biography">
             <div class="about-header">
                 <h2>BIOGRAPHY</h2>
-                <p class="subtitle">gk usah kepo</p>
+                <p class="subtitle">intinya gtu gk usah kepo.</p>
             </div>
             <ul class="about-list">
                 <li class="about-item" onclick="this.classList.toggle('expanded')">
                     <div class="item-indicator">›</div>
                     <div class="item-content">
-                        <strong>KELAS:</strong> 
+                        <strong>KELAS:</strong>
                         <span>XI P1</span>
                     </div>
                 </li>
                 <li class="about-item" onclick="this.classList.toggle('expanded')">
                     <div class="item-indicator">›</div>
                     <div class="item-content">
-                        <strong>HOBI:</strong> 
+                        <strong>HOBI:</strong>
                         <span>Fotografi, Membaca, Nonton</span>
                     </div>
                 </li>
                 <li class="about-item" onclick="this.classList.toggle('expanded')">
                     <div class="item-indicator">›</div>
                     <div class="item-content">
-                        <strong>SKILLS:</strong> 
+                        <strong>SKILLS:</strong>
                         <span>HTML, CSS, JavaScript</span>
                     </div>
                 </li>
@@ -130,15 +174,16 @@
 
         <section id="achievement">
             <h2>ACHIEVEMENT</h2>
-            <p>sebenarnya gk ada, tapi biar ada isinya aja sih</p>
+            <p class="subtitle">Sebenernya klo mau dibilang pencapain blum coccok juga sih.</p>
             <ul class="achievement-list">
                 <li class="achievement-item">
                     <div class="achievement-icon">
                         <i class="fas fa-code"></i>
                     </div>
                     <div class="achievement-content">
-                        <strong>Belajar dikit aja Web Development</strong>
-                        <span class="achievement-desc">Menyelami HTML, CSS, dan JavaScript. menyelami? anjay menyelam</span>
+                        <strong>Eksplorasi Web Development</strong>
+                        <span class="achievement-desc">yaaa, masih belajar lah dasar"nya HTML,
+                            CSS, dan JavaScript.</span>
                     </div>
                     <div class="achievement-badge">01</div>
                 </li>
@@ -147,8 +192,8 @@
                         <i class="fas fa-briefcase"></i>
                     </div>
                     <div class="achievement-content">
-                        <strong>buat Portfolio Personal</strong>
-                        <span class="achievement-desc">simple" aja sih</span>
+                        <strong>Membangun Portofolio Mandiri</strong>
+                        <span class="achievement-desc">Bikin porto ini bisa dibilang pencapaian gk sih.</span>
                     </div>
                     <div class="achievement-badge">02</div>
                 </li>
@@ -157,68 +202,108 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <div class="achievement-content">
-                        <strong>Menguasai HTML, CSS, JavaScript</strong>
-                        <span class="achievement-desc">gk juga sih</span>
+                        <strong>Peningkatan Skill Frontend</strong>
+                        <span class="achievement-desc">emmmm, gk terlalu jago bikin tampilan jadi kadang masih suka liat
+                            punya orang.</span>
                     </div>
                     <div class="achievement-badge">03</div>
                 </li>
             </ul>
         </section>
 
+        <section id="documentation">
+            <h2>DOKUMENTASI</h2>
+            <p class="subtitle">yaaa, inilah project yg pernah sya bikin</p>
+            <div class="docs-grid">
+                <div class="doc-card">
+                    <div class="doc-icon"><i class="fas fa-school"></i></div>
+                    <h3>Web Profil IPM</h3>
+                    <p>Website profil resmi Pimpinan Ranting Ikatan Pelajar Muhammadiyah SMA Muhammadiyah 1.</p>
+                    <a href="https://ipmsmamuhi.my.id" target="_blank" class="doc-link">Kunjungi <i
+                            class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="doc-card">
+                    <div class="doc-icon"><i class="fas fa-leaf"></i></div>
+                    <h3>Web Tunas Link Mesuji</h3>
+                    <p>Project website Tunas Link khusus untuk daerah Kabupaten Mesuji.</p>
+                    <a href="https://vikrialhusna221-lang.github.io/TUNASLINKMESUJI/" target="_blank"
+                        class="doc-link">Kunjungi <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="doc-card">
+                    <div class="doc-icon"><i class="fas fa-birthday-cake"></i></div>
+                    <h3>Web Ucapan Ulang Tahun</h3>
+                    <p>Website statis buat ucapin ultah aja sih.</p>
+                    <div class="doc-links-group">
+                        <a href="https://vikrialhusna221-lang.github.io/afifah/" target="_blank" class="doc-link">Afifah
+                            <i class="fas fa-external-link-alt"></i></a>
+                        <a href="https://vikrialhusna221-lang.github.io/tata/" target="_blank" class="doc-link">ajra <i
+                                class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="doc-card">
+                    <div class="doc-icon"><i class="fas fa-music"></i></div>
+                    <h3>Web Lirik Lagu</h3>
+                    <p>klo ini sih karna fomo aja liat di tiktok.</p>
+                    <a href="https://vikrialhusna221-lang.github.io/lantas-song/" target="_blank"
+                        class="doc-link">Kunjungi <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+        </section>
+
         <section id="hobbies">
-            <h2>HOBI GWEH</h2>
-            <p>pencet aja tu tombol</p>
+            <h2>HOBI SAYA</h2>
+            <p class="subtitle">klo hobi gk yg ribet" sih.</p>
             <div class="hobby-icons">
-                <div class="hobby-icon" onclick="openModal('Fotografi', 'suka foto karena ya suka-suka gweh')">
+                <div class="hobby-icon" onclick="openModal('Fotografi', 'gk jago&quot; amat sih.')">
                     <i class="fas fa-camera"></i>
                     <p>Fotografi</p>
                 </div>
-                <div class="hobby-icon" onclick="openModal('Membaca', 'suka baca karna klo gabut aja')">
+                <div class="hobby-icon" onclick="openModal('Membaca', 'suka klo ada bukunya ama klo lagi kosong aja.')">
                     <i class="fas fa-book"></i>
-                    <p>baca</p>
+                    <p>Membaca</p>
                 </div>
-                <div class="hobby-icon" onclick="openModal('Nonton', 'suka nonton anime aja sih')">
+                <div class="hobby-icon" onclick="openModal('Nonton', 'lebih ke anime aja sih.')">
                     <i class="fas fa-tv"></i>
                     <p>Nonton</p>
                 </div>
             </div>
         </section>
-        
+
         <section id="skills">
-            <h2>GW BISA</h2>
-            <p>bisa bikin web walaupun jelek,hehe</p>
+            <h2>KEAHLIAN</h2>
+            <p class="subtitle">list yg sya bisa.</p>
             <div class="skills-grid">
                 <div class="skill-card">
                     <h3>HTML</h3>
                     <div class="skill-info">
                         <label>Level:</label>
-                        <span><span class="skill-level">Newbie</span></span>
+                        <span><span class="skill-level">Dasar</span></span>
                     </div>
                     <div class="skill-info">
-                        <label>Pengalaman:</label>
-                        <span>Baru belajar</span>
+                        <label>Fokus:</label>
+                        <span>masih entry lah.</span>
                     </div>
                 </div>
                 <div class="skill-card">
                     <h3>CSS</h3>
                     <div class="skill-info">
                         <label>Level:</label>
-                        <span><span class="skill-level">Newbie</span></span>
+                        <span><span class="skill-level">Dasar</span></span>
                     </div>
                     <div class="skill-info">
-                        <label>Pengalaman:</label>
-                        <span>Baru belajar</span>
+                        <label>Fokus:</label>
+                        <span>masih suka nyontek punya orang sih .</span>
                     </div>
                 </div>
                 <div class="skill-card">
                     <h3>JavaScript</h3>
                     <div class="skill-info">
                         <label>Level:</label>
-                        <span><span class="skill-level">Newbie</span></span>
+                        <span><span class="skill-level">Dasar</span></span>
                     </div>
                     <div class="skill-info">
-                        <label>Pengalaman:</label>
-                        <span>Baru belajar</span>
+                        <label>Fokus:</label>
+                        <span>masih sering bug, jadi b aja .</span>
                     </div>
                 </div>
                 <div class="skill-card">
@@ -228,21 +313,21 @@
                         <span><span class="skill-level">Menengah</span></span>
                     </div>
                     <div class="skill-info">
-                        <label>Pengalaman:</label>
-                        <span>dah lama</span>
+                        <label>Fokus:</label>
+                        <span>b aja hasilnya, jangan berharap.</span>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="contact">
-            <h2>CONTACT PERSON</h2>
-            <p>---------:</p>
+            <h2>Contact</h2>
+            <p class="subtitle">minat monggo japri.</p>
             <div class="contact-list">
                 <div class="contact-item">
-                    <a href="/cdn-cgi/l/email-protection#8dfbe4e6ffe4ece1e5f8e3feecbfbfbccdeae0ece4e1a3eee2e0" target="_blank">
+                    <a href="mailto:vikrialhusna221@gmail.com" target="_blank">
                         <i class="fas fa-envelope"></i>
-                        <span><span class="__cf_email__" data-cfemail="ddabb4b6afb4bcb1b5a8b3aebcefefec9dbab0bcb4b1f3beb2b0">[email&#160;protected]</span></span>
+                        <span>vikrialhusna221@gmail.com</span>
                     </a>
                 </div>
                 <div class="contact-item">
@@ -257,6 +342,12 @@
                         <span>vaalh_0</span>
                     </a>
                 </div>
+                <div class="contact-item">
+                    <a href="https://github.com/vikrialhusna221-lang" target="_blank">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </a>
+                </div>
             </div>
         </section>
     </div>
@@ -268,18 +359,17 @@
             <p id="modalMessage"></p>
         </div>
     </div>
-    
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+
     <script src="script.js"></script>
 
     <footer>
         <button id="contactBtn" class="contact-btn" onclick="toggleFooterMenu()">
-            <i class="fas fa-phone"></i> Hubungi Saya
+            <i class="fas fa-phone"></i> japri aja
         </button>
         <div class="footer-menu" id="footerMenu">
-            <a href="/cdn-cgi/l/email-protection#0a7c636178636b66627f64796b3" target="_blank">
+            <a href="mailto:vikrialhusna221@gmail.com" target="_blank">
                 <i class="fas fa-envelope"></i>
-                <span>[email&#160;protected]</span>
+                <span>Email</span>
             </a>
             <a href="https://wa.me/6285184459363" target="_blank">
                 <i class="fab fa-whatsapp"></i>
@@ -289,7 +379,12 @@
                 <i class="fab fa-instagram"></i>
                 <span>Instagram</span>
             </a>
+            <a href="https://github.com/vikrialhusna221-lang" target="_blank">
+                <i class="fab fa-github"></i>
+                <span>GitHub</span>
+            </a>
         </div>
     </footer>
 </body>
+
 </html>
