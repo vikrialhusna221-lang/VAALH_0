@@ -759,10 +759,11 @@
             rimLight.intensity = 0.5 + p * 1.5;
             rimLight.position.y = -3 + p * 6;
 
-            // Dynamic camera perspective parallax
+            // Dynamic camera perspective parallax with smart mobile aspect-ratio zoom helper
+            const aspectFactor = window.innerWidth < 768 ? Math.max(1.0, 0.72 / (window.innerWidth / window.innerHeight)) : 1.0;
             camera.position.x = Math.sin(time * 0.06) * 1.6 + mouse.x * 2.8; 
             camera.position.y = 3.0 + p * 5.0 + mouse.y * 1.8;
-            camera.position.z = 15.0 - p * 3.5;
+            camera.position.z = (15.0 - p * 3.5) * aspectFactor;
             camera.lookAt(mouse.x * 1.4, p * 3.6 + mouse.y * 0.4, -2);
 
             // Floor glass surface and holographic grid lines fade slowly on scroll but remain visible at base
