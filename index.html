@@ -18,14 +18,11 @@
 </head>
 
 <body>
-    <!-- Animated Moving Gradient Lines Background -->
-    <div class="bg-lines-container">
-        <div class="bg-grid"></div>
-        <div class="bg-line bg-line-1"></div>
-        <div class="bg-line bg-line-2"></div>
-        <div class="bg-line bg-line-3"></div>
-        <div class="bg-line bg-line-4"></div>
-    </div>
+    <!-- Antigravity 3D Canvas (behind everything) -->
+    <div id="antigravity-canvas"></div>
+
+    <!-- CSS gradient background layer -->
+    <div class="bg-lines-container"></div>
 
     <header class="navbar">
         <div class="nav-logo" onclick="navigateToSection('home')">
@@ -83,7 +80,7 @@
                 <div class="theme-options">
                     <span class="theme-label">Merah</span>
                     <label class="toggle-switch">
-                        <input type="checkbox" id="darkModeToggle" checked onchange="toggleDarkMode()">
+                        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
                         <span class="slider"></span>
                     </label>
                     <span class="theme-label">Gelap</span>
@@ -107,39 +104,52 @@
                     </div>
                 </div>
                 <div class="home-hero-right">
-                    <div class="id-card-wrapper">
-                        <div class="id-card-strap"></div>
-                        <div class="id-card-clip"></div>
-                        <div class="id-card">
-                            <div class="id-card-header">
-                                <span class="card-logo">DEV CARD</span>
-                                <div class="card-chip"></div>
-                            </div>
-                            <div class="id-card-photo">
-                                <img src="https://raw.githubusercontent.com/vikrialhusna221-lang/STORAGE/main/1000035697.jpg"
-                                    alt="Vikri Al Husna" width="130" height="130" loading="eager">
-                            </div>
-                            <div class="id-card-info">
-                                <h3>Vikri Al Husna</h3>
-                                <p class="card-role">Student & Junior Developer</p>
-                                <p class="card-dept">XI P1</p>
-                                <div class="id-card-barcode">
-                                    <div class="barcode-line"></div>
-                                    <div class="barcode-line"></div>
-                                    <div class="barcode-line"></div>
-                                    <div class="barcode-line"></div>
-                                    <div class="barcode-line"></div>
-                                    <div class="barcode-line"></div>
-                                    <div class="barcode-line"></div>
-                                    <div class="barcode-line"></div>
-                                    <div class="barcode-line"></div>
-                                    <div class="barcode-line"></div>
+                    <div class="id-card-falling-container">
+                        <div class="id-card-swing-container">
+                            <div class="id-card-wrapper" id="draggableCard">
+                                <div class="id-card-strap"></div>
+                                <div class="id-card-clip"></div>
+                                <div class="id-card">
+                                    <div class="id-card-inner">
+                                        <div class="id-card-front">
+                                            <div class="id-card-header">
+                                                <span class="card-logo">DEV CARD</span>
+                                                <div class="card-chip"></div>
+                                            </div>
+                                            <div class="id-card-photo">
+                                                <img src="https://raw.githubusercontent.com/vikrialhusna221-lang/STORAGE/main/1000035697.jpg"
+                                                    alt="Vikri Al Husna" width="130" height="130" loading="eager">
+                                            </div>
+                                            <div class="id-card-info">
+                                                <h3>Vikri Al Husna</h3>
+                                                <p class="card-role">Student & Junior Developer</p>
+                                                <p class="card-dept">XI P1</p>
+                                                <div class="id-card-barcode">
+                                                    <div class="barcode-line"></div>
+                                                    <div class="barcode-line"></div>
+                                                    <div class="barcode-line"></div>
+                                                    <div class="barcode-line"></div>
+                                                    <div class="barcode-line"></div>
+                                                    <div class="barcode-line"></div>
+                                                    <div class="barcode-line"></div>
+                                                    <div class="barcode-line"></div>
+                                                    <div class="barcode-line"></div>
+                                                    <div class="barcode-line"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="id-card-back">
+                                            <h3>VAALH_0</h3>
+                                            <img src="https://raw.githubusercontent.com/vikrialhusna221-lang/STORAGE/main/vaalh_0_qr%20(1).png"
+                                                alt="Instagram QR Code">
+                                            <p>IG Account</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
 
         <section id="biography">
@@ -147,68 +157,61 @@
                 <h2>BIOGRAPHY</h2>
                 <p class="subtitle">intinya gtu gk usah kepo.</p>
             </div>
-            <ul class="about-list">
-                <li class="about-item" onclick="this.classList.toggle('expanded')">
-                    <div class="item-indicator">›</div>
-                    <div class="item-content">
-                        <strong>KELAS:</strong>
-                        <span>XI P1</span>
+            <div class="bento-grid">
+                <div class="bento-item bento-class">
+                    <div class="bento-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="bento-content">
+                        <h3>Kelas</h3>
+                        <p>XI P1</p>
                     </div>
-                </li>
-                <li class="about-item" onclick="this.classList.toggle('expanded')">
-                    <div class="item-indicator">›</div>
-                    <div class="item-content">
-                        <strong>HOBI:</strong>
-                        <span>Fotografi, Membaca, Nonton</span>
+                </div>
+                <div class="bento-item bento-hobbies">
+                    <div class="bento-icon"><i class="fas fa-gamepad"></i></div>
+                    <div class="bento-content">
+                        <h3>Hobi</h3>
+                        <p>Fotografi, Membaca, Nonton Anime</p>
                     </div>
-                </li>
-                <li class="about-item" onclick="this.classList.toggle('expanded')">
-                    <div class="item-indicator">›</div>
-                    <div class="item-content">
-                        <strong>SKILLS:</strong>
-                        <span>HTML, CSS, JavaScript</span>
+                </div>
+                <div class="bento-item bento-skills">
+                    <div class="bento-icon"><i class="fas fa-laptop-code"></i></div>
+                    <div class="bento-content">
+                        <h3>Skills Utama</h3>
+                        <div class="bento-tags">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                        </div>
                     </div>
-                </li>
-            </ul>
+                </div>
+            </div>
         </section>
 
         <section id="achievement">
             <h2>ACHIEVEMENT</h2>
-            <p class="subtitle">Sebenernya klo mau dibilang pencapain blum coccok juga sih.</p>
-            <ul class="achievement-list">
-                <li class="achievement-item">
-                    <div class="achievement-icon">
-                        <i class="fas fa-code"></i>
+            <p class="subtitle">Sebenernya klo mau dibilang pencapaian blum cocok juga sih.</p>
+            <div class="achievement-cards">
+                <div class="achieve-card" data-badge="01">
+                    <div class="achieve-icon"><i class="fas fa-code"></i></div>
+                    <div class="achieve-text">
+                        <h3>Eksplorasi Web Development</h3>
+                        <p>Yaaa, masih belajar lah dasar-dasarnya HTML, CSS, dan JavaScript.</p>
                     </div>
-                    <div class="achievement-content">
-                        <strong>Eksplorasi Web Development</strong>
-                        <span class="achievement-desc">yaaa, masih belajar lah dasar"nya HTML,
-                            CSS, dan JavaScript.</span>
+                </div>
+                <div class="achieve-card" data-badge="02">
+                    <div class="achieve-icon"><i class="fas fa-briefcase"></i></div>
+                    <div class="achieve-text">
+                        <h3>Membangun Portofolio Mandiri</h3>
+                        <p>Bikin porto ini bisa dibilang pencapaian gk sih.</p>
                     </div>
-                    <div class="achievement-badge">01</div>
-                </li>
-                <li class="achievement-item">
-                    <div class="achievement-icon">
-                        <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="achieve-card" data-badge="03">
+                    <div class="achieve-icon"><i class="fas fa-star"></i></div>
+                    <div class="achieve-text">
+                        <h3>Peningkatan Skill Frontend</h3>
+                        <p>Emmmm, gk terlalu jago bikin tampilan jadi kadang masih suka liat punya orang.</p>
                     </div>
-                    <div class="achievement-content">
-                        <strong>Membangun Portofolio Mandiri</strong>
-                        <span class="achievement-desc">Bikin porto ini bisa dibilang pencapaian gk sih.</span>
-                    </div>
-                    <div class="achievement-badge">02</div>
-                </li>
-                <li class="achievement-item">
-                    <div class="achievement-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="achievement-content">
-                        <strong>Peningkatan Skill Frontend</strong>
-                        <span class="achievement-desc">emmmm, gk terlalu jago bikin tampilan jadi kadang masih suka liat
-                            punya orang.</span>
-                    </div>
-                    <div class="achievement-badge">03</div>
-                </li>
-            </ul>
+                </div>
+            </div>
         </section>
 
         <section id="documentation">
@@ -385,6 +388,12 @@
             </a>
         </div>
     </footer>
+
+    <!-- Three.js + GSAP (deferred for performance) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script src="antigravity.js" defer></script>
 </body>
 
 </html>
