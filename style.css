@@ -1717,6 +1717,10 @@ footer {
 }
 
 @media (max-width: 768px) {
+    .container {
+        padding-top: 80px;
+    }
+
     .navbar {
         padding: 0 20px;
     }
@@ -1779,8 +1783,10 @@ footer {
         grid-template-columns: 1fr;
     }
 
+    .bento-class,
+    .bento-hobbies,
     .bento-skills {
-        grid-column: 1 / -1;
+        grid-column: auto !important;
     }
 
     .doc-card {
