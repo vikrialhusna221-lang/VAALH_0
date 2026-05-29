@@ -132,7 +132,7 @@ function initInteractiveCard() {
     let isDragging = false;
     let isClick = true;
     let startX, startY;
-    const baseStrapHeight = 250;
+    const baseStrapHeight = parseInt(window.getComputedStyle(strap).height) || 600;
 
     // Set origin to top so it swings from the anchor
     cardWrapper.style.transformOrigin = 'top center';
