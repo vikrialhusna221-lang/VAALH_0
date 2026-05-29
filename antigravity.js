@@ -124,6 +124,9 @@
         const container = document.getElementById('antigravity-canvas');
         if (!container) return;
 
+        // Detect mobile or touch-based devices for custom adaptive lightweight performance rules
+        const isMobile = window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
         // ====== INTERACTIVE MOUSE STATE ======
         const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
         
@@ -169,13 +172,13 @@
 
         // ====== RENDERER ======
         const renderer = new THREE.WebGLRenderer({
-            antialias: true,
+            antialias: !isMobile,
             alpha: true,
             powerPreference: 'high-performance'
         });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-        renderer.shadowMap.enabled = true;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.0 : 1.35));
+        renderer.shadowMap.enabled = !isMobile;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.25;
@@ -201,24 +204,12 @@
         spotLight.penumbra = 0.85;
         spotLight.decay = 1.25;
         spotLight.distance = 70;
-        spotLight.castShadow = true;
-        spotLight.shadow.mapSize.width = 2048;
-        spotLight.shadow.mapSize.height = 2048;
-        spotLight.shadow.bias = -0.00015;
+        spotLight.castShadow = false; // Disabled to save 33% GPU fill-rate (shadow map rendering)
         scene.add(spotLight);
  
         const dirLight = new THREE.DirectionalLight(activeTheme.accent2, 3.5);
         dirLight.position.set(-8, 12, 4);
-        dirLight.castShadow = true;
-        dirLight.shadow.mapSize.width = 2048;
-        dirLight.shadow.mapSize.height = 2048;
-        dirLight.shadow.bias = -0.00015;
-        dirLight.shadow.camera.near = 0.5;
-        dirLight.shadow.camera.far = 40;
-        dirLight.shadow.camera.left = -15;
-        dirLight.shadow.camera.right = 15;
-        dirLight.shadow.camera.top = 15;
-        dirLight.shadow.camera.bottom = -15;
+        dirLight.castShadow = false; // Disabled to save 33% GPU fill-rate (shadow map rendering)
         scene.add(dirLight);
  
         const mouseLight = new THREE.PointLight(activeTheme.mouseColor, 3.0, 30);
@@ -232,9 +223,10 @@
         // Dedicated Top-Down Shadow Projection Light (projects perfect keycap layout shadows directly beneath)
         const topShadowLight = new THREE.DirectionalLight(0xffffff, 3.8);
         topShadowLight.position.set(0, 12, -2.5);
-        topShadowLight.castShadow = true;
-        topShadowLight.shadow.mapSize.width = 2048;
-        topShadowLight.shadow.mapSize.height = 2048;
+        topShadowLight.castShadow = !isMobile;
+        const shadowSize = isMobile ? 512 : 2048; // Responsive shadow map size
+        topShadowLight.shadow.mapSize.width = shadowSize;
+        topShadowLight.shadow.mapSize.height = shadowSize;
         topShadowLight.shadow.bias = -0.00015;
         topShadowLight.shadow.camera.near = 0.5;
         topShadowLight.shadow.camera.far = 18;
@@ -256,7 +248,7 @@
         const floor = new THREE.Mesh(floorGeo, floorMat);
         floor.rotation.x = -Math.PI / 2;
         floor.position.y = -3.2;
-        floor.receiveShadow = true;
+        floor.receiveShadow = !isMobile;
         scene.add(floor);
 
         // Cyber Grid Helper (glows with active theme's accent color)
@@ -312,31 +304,56 @@
         const isThemeRed = document.body.classList.contains('theme-red');
         const colorHexStr = isThemeRed ? '#ff3366' : '#00f3ff';
 
+        // Pre-create shared geometries to optimize WebGL memory allocation
+        const GEOMETRIES = {
+            standard: new THREE.BoxGeometry(0.75, 0.75, 0.22),
+            short: new THREE.BoxGeometry(1.1, 0.75, 0.22),
+            medium: new THREE.BoxGeometry(1.6, 0.75, 0.22),
+            long: new THREE.BoxGeometry(2.4, 0.75, 0.22),
+            spacebar: new THREE.BoxGeometry(4.5, 0.75, 0.22)
+        };
+
+        // Shared metallic side material to save 67 distinct standard materials in WebGL memory
+        const sideMat = new THREE.MeshStandardMaterial({
+            color: isThemeRed ? 0x1f0b12 : 0x071b26, // theme-tinted dark chrome
+            roughness: 0.12,
+            metalness: 0.9,
+            transparent: true,
+            opacity: 0.95
+        });
+
+        // Shared holographic wireframe outline material
+        const wireMat = new THREE.MeshBasicMaterial({
+            color: isThemeRed ? 0xff3366 : 0x00f3ff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.22, 
+        });
+
         KEYBOARD_LAYOUT.forEach((keyInfo, idx) => {
             const charLen = keyInfo.char.length;
-            let keyWidth = 0.75;
+            let geo = GEOMETRIES.standard;
             let canvasWidth = 128;
             let fontSize = 74;
 
             if (keyInfo.isSpacebar) {
-                keyWidth = 4.5;
+                geo = GEOMETRIES.spacebar;
                 canvasWidth = 512;
                 fontSize = 44;
             } else if (charLen > 6) {
-                keyWidth = 2.4;
+                geo = GEOMETRIES.long;
                 canvasWidth = 384;
                 fontSize = 32;
             } else if (charLen > 3) {
-                keyWidth = 1.6;
+                geo = GEOMETRIES.medium;
                 canvasWidth = 256;
                 fontSize = 42;
             } else if (charLen > 1) {
-                keyWidth = 1.1;
+                geo = GEOMETRIES.short;
                 canvasWidth = 192;
                 fontSize = 52;
             }
 
-            const geo = new THREE.BoxGeometry(keyWidth, 0.75, 0.22);
             const letterTex = createLetterTexture(keyInfo.char, colorHexStr, canvasWidth, fontSize);
             
             const frontMat = new THREE.MeshStandardMaterial({
@@ -349,22 +366,14 @@
                 emissiveIntensity: 0.18
             });
             
-            const sideMat = new THREE.MeshStandardMaterial({
-                color: isThemeRed ? 0x1f0b12 : 0x071b26, // theme-tinted dark chrome
-                roughness: 0.12,
-                metalness: 0.9,
-                transparent: true,
-                opacity: 0.95
-            });
-            
             // Apply materials array (4 index is Front face which displays letter)
             const materials = [
-                sideMat, // right
-                sideMat, // left
-                sideMat, // top
-                sideMat, // bottom
+                sideMat, // right (shared)
+                sideMat, // left (shared)
+                sideMat, // top (shared)
+                sideMat, // bottom (shared)
                 frontMat, // front (displays the glowing siber letter/number/operator)
-                sideMat  // back
+                sideMat  // back (shared)
             ];
 
             const mesh = new THREE.Mesh(geo, materials);
@@ -377,17 +386,11 @@
             mesh.position.set(gridX, gridY, gridZ);
             mesh.rotation.set(0, 0, 0);
 
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
+            mesh.castShadow = !isMobile;
+            mesh.receiveShadow = !isMobile;
 
-            // Holographic Wireframe shell outline
-            if (idx % 3 === 0) {
-                const wireMat = new THREE.MeshBasicMaterial({
-                    color: isThemeRed ? 0xff3366 : 0x00f3ff,
-                    wireframe: true,
-                    transparent: true,
-                    opacity: 0.22, 
-                });
+            // Holographic Wireframe shell outline (using shared wireMat and shared geo)
+            if (!isMobile && idx % 3 === 0) {
                 const wireMesh = new THREE.Mesh(geo, wireMat);
                 wireMesh.scale.setScalar(1.15); 
                 mesh.add(wireMesh); 
@@ -426,7 +429,7 @@
         // ====== 3D BRAND SIGNATURE "VAALH_0" BUILDING ======
         const sigObjects = [];
         SIGNATURE_LAYOUT.forEach((sigInfo) => {
-            const geo = new THREE.BoxGeometry(0.75, 0.75, 0.22);
+            const geo = GEOMETRIES.standard; // Share geometry
             
             // Generate glowing canvas texture for the letters
             const letterTex = createLetterTexture(sigInfo.char, colorHexStr, 128, 74);
@@ -441,21 +444,13 @@
                 emissiveIntensity: 0.28 // Glow slightly brighter for signature logo!
             });
             
-            const sideMat = new THREE.MeshStandardMaterial({
-                color: isThemeRed ? 0x1f0b12 : 0x071b26,
-                roughness: 0.12,
-                metalness: 0.9,
-                transparent: true,
-                opacity: 0.95
-            });
-            
             const materials = [
-                sideMat, // right
-                sideMat, // left
-                sideMat, // top
-                sideMat, // bottom
+                sideMat, // right (shared)
+                sideMat, // left (shared)
+                sideMat, // top (shared)
+                sideMat, // bottom (shared)
                 frontMat, // front face (glowing neon letter)
-                sideMat  // back
+                sideMat  // back (shared)
             ];
 
             const mesh = new THREE.Mesh(geo, materials);
@@ -464,8 +459,8 @@
             mesh.position.set(sigInfo.x, -3.09, -4.5);
             mesh.rotation.set(-Math.PI / 2, 0, 0); // Laid flat facing upward
             
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
+            mesh.castShadow = !isMobile;
+            mesh.receiveShadow = !isMobile;
             
             scene.add(mesh);
             
@@ -477,7 +472,7 @@
         });
 
         // ====== BACKGROUND PARTICLES ======
-        const PARTICLE_COUNT = 130; 
+        const PARTICLE_COUNT = isMobile ? 50 : 130; 
         const pPositions = new Float32Array(PARTICLE_COUNT * 3);
         const pOriginal = new Float32Array(PARTICLE_COUNT * 3);
 
